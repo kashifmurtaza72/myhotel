@@ -1,5 +1,5 @@
 const express = require("express");
-const app = express();
+const app = express(); // express package 
 const db = require("./db");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json()); // req.body
