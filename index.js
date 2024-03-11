@@ -3,6 +3,7 @@ const app = express(); // express package
 const db = require("./db");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json()); // req.body
+
 const passport = require("./auth");
 
 
@@ -17,7 +18,7 @@ const logRequest = (req, res, next) => {
 // it will be applied on all routes
 app.use(logRequest);
 
-//app.use(passport.initialize());
+app.use(passport.initialize());
 const localAuthMiddleware = passport.authenticate('local', { session: false });
 
 app.get("/", function (req, res) {
@@ -30,7 +31,7 @@ const menuRoutes = require("./routes/menuRoutes");
 
 
 app.use("/menu", menuRoutes);
-app.use("/person",  personRoutes);
+app.use("/person", localAuthMiddleware,  personRoutes);
 
 
 //app.listen(3000, () => console.log("Server is listening on port 3000"));
