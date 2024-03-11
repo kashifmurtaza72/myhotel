@@ -16,16 +16,36 @@ router.post("/", async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+// router.get("/", async (req, res) => {
+//   try {
+//     const data = await Person.find();
+//     console.log("data fetched");
+//     res.status(200).json(data);
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
 router.get("/", async (req, res) => {
   try {
-    const data = await Person.find();
-    console.log("data fetched");
-    res.status(200).json(data);
+    const userData = req.user;
+    if (userData) {
+      const userId = userData.id;
+      const user = await Person.findById(userId);
+      res.status(200).json({ user });
+    } else {
+      const data = await Person.find();
+      console.log(req.user);
+      res.status(200).json(data);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+
 router.get("/:workType", async (req, res) => {
   try {
     const workType = req.params.workType; // extract the work type from the URL parameter

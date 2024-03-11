@@ -27,6 +27,14 @@ const personScheme = new mongoose.Schema({
     type: "number",
     required: true,
   },
+  username: {
+    required: true,
+    type: String
+  },
+  password: {
+    required: true,
+    type: String
+  }
 });
 
 
